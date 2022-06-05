@@ -1,8 +1,8 @@
-const express = require('express'),
-  morgan = require('morgan'),
-  fs = require('fs'), // import built in node modules fs and path 
-  path = require('path');
-
+const express = require('express');
+const app = express();
+morgan = require('morgan'),
+fs = require('fs'), // import built in node modules fs and path 
+path = require('path');
 
 let topMiyazakiMovies = [
     {
@@ -47,10 +47,10 @@ let topMiyazakiMovies = [
     },
     
   ];
-    //Morgan request logger
+
+ //Morgan request logger
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 app.use(morgan('combined',{stream: accessLogStream}));
-
 
   // GET requests
   app.get('/', (req, res) => {
@@ -66,16 +66,17 @@ app.use(morgan('combined',{stream: accessLogStream}));
 
   });
   
-//serving static files
+
+  //serving static files
 app.use(express.static('public'));
 
 
 
-    //error handling
-    app.use((err, req, res, next) => {
-      console.error(err.stack);
-      res.status(500).send('Something broke!');
-    });
+//error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
   // listen for requests
   app.listen(8080, () => {
