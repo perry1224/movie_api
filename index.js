@@ -1,49 +1,71 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 morgan = require('morgan'),
 fs = require('fs'), // import built in node modules fs and path 
 path = require('path');
+uuid= require('uuid');
+
+app.use(bodyParser.json());
 
 let topMiyazakiMovies = [
     {
       title: 'My Neighbor Totoro',
-      creator: 'Hayao Miyazaki'
+      genre: ['anime', 'fantasy', 'family'],
+      year: '1988',
+      director: 'Hayao Miyazaki',
     },
     {
       title: 'Kiki\'s Delivery Service',
-      creator: 'Hayao Miyazaki'
+      genre: ['anime', 'fantasy', 'adventure'],
+      year: '1989',
+      director: 'Hayao Miyazaki'
     },
     {
       title: 'Ponyo',
-      creator: 'Hayao Miyazaki'
+      genre: ['anime', 'violence'],
+      year: '2008',
+      director: 'Hayao Miyazaki',
     },
     {
       title: 'Howl\'s Moving Castle',
-      creator: 'Hayao Miyazaki'
+      genre: ['fantasy', 'anime'],
+      year: '2004',
+      director: 'Hayao Miyazaki',
     },
     {
       title: 'The Wind Rises',
-      creator: 'Hayao Miyazaki'
+      director: 'Hayao Miyazaki'
     },
     {
       title: 'Princess Mononoke',
-      creator: 'Hayao Miyazaki'
+      genre: ['violence', 'suspense', 'fantasy'],
+      year: '1997',
+      director: 'Hayao Miyazaki'
     },
     {
       title: 'Castle in the Sky',
-      creator: 'Hayao Miyazaki'
+      genre: ['fantasy', 'romance', 'anime'],
+      year: '1986',
+      director: 'Hayao Miyazaki'
     },
     {
       title: 'Porco Rosso',
-      creator: 'Hayao Miyazaki'
+      genre: ['comedy', 'fantasy', 'mature'],
+      year: '1992',
+      director: 'Hayao Miyazaki'
     },
     {
       title: 'Spirited Away',
-      creator: 'Hayao Miyazaki'
+      genre: 'fantasy',
+      year: '2001',
+      director: 'Hayao Miyazaki'
     },
     {
       title: 'The Castle of Cagliostro',
-      creator: 'Hayao Miyazaki'
+      genre: ['action', 'adventure', 'anime'],
+      year: '1979',
+      director: 'Hayao Miyazaki'
     },
     
   ];
@@ -64,9 +86,18 @@ app.use(morgan('combined',{stream: accessLogStream}));
   app.get('/movies', (req, res) => {
     res.json(topMiyazakiMovies);
 
+
   });
   
-
+  app.get('/movies/genre/:genreName', (req, res) => {
+    const { genreName } = req.params;
+    const genre = movies.find( movie => movie.Genre.Name === genreName).Genre;
+      if (genre) {
+        res.status(200).json(genre);
+      } else { 
+        res.status(400).send("No such genre")
+      }
+  })
   //serving static files
 app.use(express.static('public'));
 
@@ -79,6 +110,6 @@ app.use((err, req, res, next) => {
 });
 
   // listen for requests
-  app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+  app.listen(8081, () => {
+    console.log('Your app is listening on port 8081.');
   });
