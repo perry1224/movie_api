@@ -1,10 +1,10 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
-morgan = require('morgan'),
-fs = require('fs'), // import built in node modules fs and path 
-path = require('path');
-uuid= require('uuid');
+const morgan = require('morgan');
+const fs = require('fs'); // import built in node modules fs and path 
+const path = require('path');
+const uuid= require('uuid');
 
 app.use(bodyParser.json());
 
@@ -91,7 +91,7 @@ app.use(morgan('combined',{stream: accessLogStream}));
   
   app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const genre = movies.find( movie => movie.Genre.Name === genreName).Genre;
+    const genre = movies.find( movie => movie.genre.Name === genreName).genre;
       if (genre) {
         res.status(200).json(genre);
       } else { 
