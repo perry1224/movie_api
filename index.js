@@ -10,62 +10,63 @@ app.use(bodyParser.json());
 
 let topMiyazakiMovies = [
     {
-      title: 'My Neighbor Totoro',
-      genre: ['anime', 'fantasy', 'family'],
-      year: '1988',
-      director: 'Hayao Miyazaki',
+      Title: 'My Neighbor Totoro',
+      Genre: ['anime', 'fantasy', 'family'],
+      Year: '1988',
+      Director: 'Hayao Miyazaki',
     },
     {
-      title: 'Kiki\'s Delivery Service',
-      genre: ['anime', 'fantasy', 'adventure'],
-      year: '1989',
-      director: 'Hayao Miyazaki'
+      Title: 'Kiki\'s Delivery Service',
+      Genre: ['anime', 'fantasy', 'adventure'],
+      Year: '1989',
+      Director: 'Hayao Miyazaki'
     },
     {
-      title: 'Ponyo',
-      genre: ['anime', 'violence'],
-      year: '2008',
-      director: 'Hayao Miyazaki',
+      Title: 'Ponyo',
+      Genre: ['anime', 'violence'],
+      Year: '2008',
+      Director: 'Hayao Miyazaki',
     },
     {
-      title: 'Howl\'s Moving Castle',
-      genre: ['fantasy', 'anime'],
-      year: '2004',
-      director: 'Hayao Miyazaki',
+      Title: 'Howl\'s Moving Castle',
+      Genre: ['fantasy', 'anime'],
+      Year: '2004',
+      Director: 'Hayao Miyazaki',
     },
     {
-      title: 'The Wind Rises',
-      director: 'Hayao Miyazaki'
+      Title: 'The Wind Rises',
+      Genre: ['war', 'romance'],
+      Director: 'Hayao Miyazaki'
     },
     {
-      title: 'Princess Mononoke',
-      genre: ['violence', 'suspense', 'fantasy'],
-      year: '1997',
-      director: 'Hayao Miyazaki'
+      Title: 'Princess Mononoke',
+      Genre: ['violence', 'suspense', 'fantasy'],
+      Year: '1997',
+      Director: 'Hayao Miyazaki'
     },
     {
-      title: 'Castle in the Sky',
-      genre: ['fantasy', 'romance', 'anime'],
-      year: '1986',
-      director: 'Hayao Miyazaki'
+      Title: 'Castle in the Sky',
+      Genre: ['fantasy', 'romance', 'anime'],
+      Year: '1986',
+      Director: 'Hayao Miyazaki'
     },
     {
-      title: 'Porco Rosso',
-      genre: ['comedy', 'fantasy', 'mature'],
-      year: '1992',
-      director: 'Hayao Miyazaki'
+      Title: 'Porco Rosso',
+      Genre: ['comedy', 'fantasy', 'mature'],
+      Year: '1992',
+      Director: 'Hayao Miyazaki'
     },
     {
-      title: 'Spirited Away',
-      genre: 'fantasy',
-      year: '2001',
-      director: 'Hayao Miyazaki'
+      Title: 'Spirited Away',
+      Genre: 'fantasy',
+      Year: '2001',
+      Director: 'Hayao Miyazaki'
     },
     {
-      title: 'The Castle of Cagliostro',
-      genre: ['action', 'adventure', 'anime'],
-      year: '1979',
-      director: 'Hayao Miyazaki'
+      Title: 'The Castle of Cagliostro',
+      Genre: ['action', 'adventure', 'anime'],
+      Year: '1979',
+      Director: 'Hayao Miyazaki'
     },
     
   ];
@@ -88,10 +89,17 @@ app.use(morgan('combined',{stream: accessLogStream}));
 
 
   });
+
+  //READ
+  app.get('/movies/title', (req, res) => {
+    const { title } = req.params;
+    const movie = movie.find( movie => movie.Title === title);
+  })
   
+  //READ
   app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const genre = movies.find( movie => movie.genre.Name === genreName).genre;
+    const movies = movies.find( movie => movie.Genre.Name === genreName).Genre;
       if (genre) {
         res.status(200).json(genre);
       } else { 
@@ -110,6 +118,6 @@ app.use((err, req, res, next) => {
 });
 
   // listen for requests
-  app.listen(8081, () => {
-    console.log('Your app is listening on port 8081.');
+  app.listen(8082, () => {
+    console.log('Your app is listening on port 8082.');
   });
