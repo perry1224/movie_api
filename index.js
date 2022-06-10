@@ -8,7 +8,7 @@ const uuid= require('uuid');
 
 app.use(bodyParser.json());
 
-let topMiyazakiMovies = [
+let movies = [
     {
       Title: 'My Neighbor Totoro',
       Genre: ['anime', 'fantasy', 'family'],
@@ -85,21 +85,29 @@ app.use(morgan('combined',{stream: accessLogStream}));
   });
   
   app.get('/movies', (req, res) => {
-    res.json(topMiyazakiMovies);
+    res.json(movies);
 
 
   });
 
   //READ
-  app.get('/movies/title', (req, res) => {
+  app.get('/movies/:title', (req, res) => {
     const { title } = req.params;
-    const movie = movie.find( movie => movie.Title === title);
-  })
+    const movie = movie.find( movies => movies.Title === title);
+    if (title) {
+      res.status(200).json(title);
+    } else {
+      res.status(400).send("No such title")
+    }
+  });
+    app.get('/movies/title', (req, res) => {
+      res.json(title);
+  });
   
   //READ
   app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const movies = movies.find( movie => movie.Genre.Name === genreName).Genre;
+    const movie = movie.find( movies => movies.Genre.name === genreName).genre;
       if (genre) {
         res.status(200).json(genre);
       } else { 
