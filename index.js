@@ -1,12 +1,39 @@
-const bodyParser = require('body-parser');
+bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const fs = require('fs'); // import built in node modules fs and path 
 const path = require('path');
-const uuid= require('uuid');
+uuid= require('uuid');
 
 app.use(bodyParser.json());
+
+let users = [
+  {
+    id: 1,
+    name: 'Will',
+    favoriteMovies: []
+},
+{
+    id: 2,
+    name: 'Miki',
+    favoriteMovies: ['Your Name']
+},
+]
+
+//CREATE
+app.post('/users', (req, res) => {
+  const newUser = req.body;
+
+  if (newUser.name) {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).json(newUser)
+  } else {
+    res.status(400).send('users need names')
+  }
+  
+})
 
 let movies = [
     {
@@ -65,7 +92,7 @@ let movies = [
       Director: {
         Name: 'Gore Verbinski',
         DOB: '1964',
-        BIO: 'Gregor Justin "Gore" Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates of the Caribbean films, and Rango.'},
+        BIO: 'Gregor Justin \"Gore\" Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates of the Caribbean films, and Rango.'},
     },
     {
       Title: 'Interstellar',
@@ -76,7 +103,7 @@ let movies = [
       Director: {
         Name: 'Christopher Nolan',
         DOB:'1970',
-        BIO:'Gregor Justin "Gore" Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates of the Caribbean films, and Rango.'},
+        BIO:'Christopher Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed more than US$5 billion worldwide, and have garnered 11 Academy Awards from 36 nominations. Born and raised in London, Nolan developed an interest in filmmaking from a young age.'},
     },
     {
       Title: 'Inception',
@@ -87,7 +114,7 @@ let movies = [
       Director: {
         Name: 'Christopher Nolan',
         DOB: '1970',
-        BIO:'Gregor Justin "Gore" Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates of the Caribbean films, and Rango.'},
+        BIO:'Christopher Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed more than US$5 billion worldwide, and have garnered 11 Academy Awards from 36 nominations. Born and raised in London, Nolan developed an interest in filmmaking from a young age.'},
     },
     {
       Title: 'The Dark Knight',
@@ -98,7 +125,7 @@ let movies = [
       Director: {
         Name:'Christopher Nolan',
         DOB: '1970',
-        BIO: 'Gregor Justin "Gore" Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates of the Caribbean films, and Rango.'},
+        BIO: 'Christopher Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed more than US$5 billion worldwide, and have garnered 11 Academy Awards from 36 nominations. Born and raised in London, Nolan developed an interest in filmmaking from a young age.'},
     },
     {
       Title: 'Final Destination',
