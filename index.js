@@ -4,77 +4,105 @@ const app = express();
 const morgan = require('morgan');
 const fs = require('fs'); // import built in node modules fs and path 
 const path = require('path');
-uuid= require('uuid');
+const uuid= require('uuid');
 
 app.use(bodyParser.json());
 
 let movies = [
     {
       Title: 'My Neighbor Totoro',
-      Genre: ['anime', 'fantasy', 'family'],
       Genre: {
-        Name: "anime"
-      },
+        Name: 'anime',
+        Description: 'This acclaimed animated tale by director Hayao Miyazaki follows schoolgirl Satsuke and her younger sister, Mei, as they settle into an old country house with their father and wait for their mother to recover from an illness in an area hospital. As the sisters explore their new home, they encounter and befriend playful spirits in their house and the nearby forest, most notably the massive cuddly creature known as Totoro.'},
       Year: '1988',
       Director: 'Hayao Miyazaki',
     },
     {
-      Title: 'Kiki\'s Delivery Service',
-      Genre: ['anime', 'fantasy', 'adventure'],
-      Year: '1989',
-      Director: 'Hayao Miyazaki'
+      Title: 'Avengers:Endgame',
+      Genre: {
+        Name: 'action',
+        Description:'Adrift in space with no food or water, Tony Stark sends a message to Pepper Potts as his oxygen supply starts to dwindle. Meanwhile, the remaining Avengers -- Thor, Black Widow, Captain America and Bruce Banner -- must figure out a way to bring back their vanquished allies for an epic showdown with Thanos -- the evil demigod who decimated the planet and the universe.'},
+      Year: '2019',
+      Director: 'Anthony Russo',
     },
     {
-      Title: 'Ponyo',
-      Genre: ['anime', 'violence'],
+      Title: 'Your Name',
+      Genre: {
+        Name:'anime',
+        Description:'A teenage boy living in Tokyo and a teenage girl living in the country experience a strange, random phenomenon. They occasionally switch bodies for a day at a time, and then cannot remember what happened while they were switched.'},
+      Year: '2016',
+      Director: 'Makoto Shinkai',
+    },
+    {
+      Title: 'Scream',
+      Genre: { 
+       Name: 'horror',
+       Description:'A fright-masked knife maniac stalks high-school students in middle-class suburbia.'},
+      Year: '1996',
+      Director: 'Wes Craven',
+    },
+    {
+      Title: 'The Ring',
+      Genre: {
+        Name: 'horror',
+        Description:'A videotape filled with nightmarish images leads to a phone call foretelling the viewer\'s death in exactly seven days.'},
+      Year: '2002',
+      Director: 'Gore Verbinski',
+    },
+    {
+      Title: 'Interstellar',
+      Genre: {
+        Name: 'adventure',
+        Description:'A brilliant NASA physicist, is working on plans to save mankind by transporting Earth\'s population to a new home via a wormhole.But first, Brand must send former NASA pilot Cooper and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind\'s new home.'},
+      Year: '2014',
+      Director: 'Christopher Nolan',
+    },
+    {
+      Title: 'Inception',
+      Genre: {
+        Name: 'action',
+        Description:'Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people\'s dreams and steal their secrets from their subconscious. His skill has made him a hot commodity in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: Plant an idea in someone\'s mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb\'s every move.'},
+      Year: '2010',
+      Director: 'Christopher Nolan',
+    },
+    {
+      Title: 'The Dark Knight',
+      Genre: {
+        Name: 'action',
+        Description:'A vile young criminal calling himself the Joker (Heath Ledger) suddenly throws the town into chaos, the caped Crusader begins to tread a fine line between heroism and vigilantism.'},
       Year: '2008',
-      Director: 'Hayao Miyazaki',
+      Director: 'Christopher Nolan',
     },
     {
-      Title: 'Howl\'s Moving Castle',
-      Genre: ['fantasy', 'anime'],
-      Year: '2004',
-      Director: 'Hayao Miyazaki',
+      Title: 'Final Destination',
+      Genre: {
+        Name: 'horror',
+        Description: 'You canno escape death'},
+      Year: '2000',
+      Director: 'Jeffrey Reddick',
     },
     {
-      Title: 'The Wind Rises',
-      Genre: ['war', 'romance'],
-      Year: '2013',
-      Director: 'Hayao Miyazaki'
-    },
-    {
-      Title: 'Princess Mononoke',
-      Genre: ['violence', 'suspense', 'fantasy'],
-      Year: '1997',
-      Director: 'Hayao Miyazaki'
-    },
-    {
-      Title: 'Castle in the Sky',
-      Genre: ['fantasy', 'romance', 'anime'],
-      Year: '1986',
-      Director: 'Hayao Miyazaki'
-    },
-    {
-      Title: 'Porco Rosso',
-      Genre: ['comedy', 'fantasy', 'mature'],
-      Year: '1992',
-      Director: 'Hayao Miyazaki'
-    },
-    {
-      Title: 'Spirited Away',
-      Genre: 'fantasy',
-      Year: '2001',
-      Director: 'Hayao Miyazaki'
-    },
-    {
-      Title: 'The Castle of Cagliostro',
-      Genre: ['action', 'adventure', 'anime'],
-      Year: '1979',
-      Director: 'Hayao Miyazaki'
+      Title: 'Pineapple Express',
+      Genre: {
+        Name: 'comedy',
+        Description:'Stoner Dale Denton\'s (Seth Rogen) enjoyment of a rare strain of marijuana may prove fatal when he drops his roach in a panic after witnessing a murder. Upon learning that the fancy weed can be traced back to them, Dale and his dealer (James Franco) go on the lam, with a dangerous drug lord (Gary Cole) and crooked cop (Rosie Perez) hot on their heels.'},
+      Year: '2008',
+      Director: 'David Green',
     },
     
   ];
 
+  // GET requests
+  app.get('/', (req, res) => {
+    res.send('Welcome to my top movies');
+  });
+  
+  app.get('/documentation', (req, res) => {                  
+    res.sendFile('public/documentation.html', { root: __dirname });
+  });
+  app.get('/movies', (req, res) => {
+    res.json(movies);
+  });
 
   //READ
   app.get('/movies/:title', (req, res) => {
@@ -91,7 +119,7 @@ let movies = [
   //READ
   app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const movie = movie.find( movies => movies.Genre.name === genreName).genre;
+    const genre = movies.find( movie => movie.Genre.Name === genreName).Genre;
       if (genre) {
         res.status(200).json(genre);
       } else { 
@@ -107,14 +135,7 @@ app.use(express.static('public'));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 app.use(morgan('combined',{stream: accessLogStream}));
 
-  // GET requests
-  app.get('/', (req, res) => {
-    res.send('Welcome to my top Hayao Miyazaki movies');
-  });
-  
-  app.get('/documentation', (req, res) => {                  
-    res.sendFile('public/documentation.html', { root: __dirname });
-  });
+
 
 
 //error handling
