@@ -4,7 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const fs = require('fs'); // import built in node modules fs and path 
 const path = require('path');
-const uuid= require('uuid');
+uuid= require('uuid');
 
 app.use(bodyParser.json());
 
@@ -12,6 +12,9 @@ let movies = [
     {
       Title: 'My Neighbor Totoro',
       Genre: ['anime', 'fantasy', 'family'],
+      Genre: {
+        Name: "anime"
+      },
       Year: '1988',
       Director: 'Hayao Miyazaki',
     },
@@ -36,6 +39,7 @@ let movies = [
     {
       Title: 'The Wind Rises',
       Genre: ['war', 'romance'],
+      Year: '2013',
       Director: 'Hayao Miyazaki'
     },
     {
@@ -71,6 +75,34 @@ let movies = [
     
   ];
 
+
+  //READ
+  app.get('/movies/:title', (req, res) => {
+    const { title } = req.params;
+    const movie = movies.find( movie => movie.Title === title);
+    if (movie) {
+      res.status(200).json(movie);
+    } else {
+      res.status(400).send("No such title")
+    }
+  });
+
+  
+  //READ
+  app.get('/movies/genre/:genreName', (req, res) => {
+    const { genreName } = req.params;
+    const movie = movie.find( movies => movies.Genre.name === genreName).genre;
+      if (genre) {
+        res.status(200).json(genre);
+      } else { 
+        res.status(400).send("No such genre")
+      }
+  })
+  
+  //serving static files
+app.use(express.static('public'));
+
+
  //Morgan request logger
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 app.use(morgan('combined',{stream: accessLogStream}));
@@ -83,40 +115,6 @@ app.use(morgan('combined',{stream: accessLogStream}));
   app.get('/documentation', (req, res) => {                  
     res.sendFile('public/documentation.html', { root: __dirname });
   });
-  
-  app.get('/movies', (req, res) => {
-    res.json(movies);
-
-
-  });
-
-  //READ
-  app.get('/movies/:title', (req, res) => {
-    const { title } = req.params;
-    const movie = movie.find( movies => movies.Title === title);
-    if (title) {
-      res.status(200).json(title);
-    } else {
-      res.status(400).send("No such title")
-    }
-  });
-    app.get('/movies/title', (req, res) => {
-      res.json(title);
-  });
-  
-  //READ
-  app.get('/movies/genre/:genreName', (req, res) => {
-    const { genreName } = req.params;
-    const movie = movie.find( movies => movies.Genre.name === genreName).genre;
-      if (genre) {
-        res.status(200).json(genre);
-      } else { 
-        res.status(400).send("No such genre")
-      }
-  })
-  //serving static files
-app.use(express.static('public'));
-
 
 
 //error handling
