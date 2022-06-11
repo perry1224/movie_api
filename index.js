@@ -1,10 +1,10 @@
-bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const fs = require('fs'); // import built in node modules fs and path 
 const path = require('path');
-uuid= require('uuid');
+const uuid= require('uuid');
 
 app.use(bodyParser.json());
 
