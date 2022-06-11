@@ -1,15 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <title>Movies Web Application</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-    <h1>Movie Database</h1>
-        <p>I am building the server-side component of a "movies" web application.
-        This API provides information on films, directors, and genres.
-        Users can register, add personal information, and create and maintain their own lists of films.</p>
+  <h1>Movies Documentation</h1>
+    <p>
+      Building a server-side component of a movies web application.
+      This web application will provide access to information about different movies, directors, and genres.
+      Users will be able to sign up,update their personal information, and create a list of their favorite movies.
+    </p>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Number</th>
+          <th scope="col">Request</th>
+          <th scope="col">URL</th>
+          <th scope="col">HTTP Method</th>
+          <th scope="col">Request body data format</th>
+          <th scope="col">Response body data format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Get a list of all movies</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data
+            about all the movies</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Get data about a single movie by title</td>
+          <td>/movies/[title]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td> A JSON object holding data about a single movie,containing an title, description,director, and genre
+            property.<br>
+            "Genre": {<br>
+            "Name": "horror",<br>
+            "Description": "Nobody can escape death"<br>
+            }<br>
+            "Title":"Final Destination"
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Return genre by name</td>
+          <td>/movies/[genre]/[genreName]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about the genre class<br>
+            Example:{<br>
+            {<br>
+            "Name": "horror",<br>
+            "Description": "Nobody can escape death"<br>
+            }<br>
+            
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>Get data about director by name</td>
+          <td>/movies/[directors]/[directorName]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about a director.Example<br>
+            {<br>
+            "name": "Makoto Shinkai",<br>
+            "DOB": "1973",<br>
+            "Bio": "Shinkai began his career as a video game animator with Nihon Falcom in 1996, and gained recognition as a filmmaker with the release of the original video animation She and Her Cat."<br>
+            }
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td>Add a new user</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>A JSON object holding
+            data about the user to
+            add, structured like:<br>
+            {<br>
+            "name" : "Will",<br>
+            "password" : 1123,<br>
+            "email" : "willsmith@gmail.com"<br>
+            "DOB": "1950"<br>
+            "favoriteMovies":[]<br>
+            }
+          </td>
+          <td>A JSON object holding data
+            about the user that was
+            added, including an ID:Example<br>
+            {<br>
+            "id":3,<br>
+            "name" : "Will",<br>
+            "password" : 1123,<br>
+            "email" : "willsmith@gmail.com"<br>
+            "DOB": "1950"<br>
+            "favoriteMovies":[]<br>
+            }<br>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">6</th>
+          <td>Update user name</td>
+          <td>/users/[name]</td>
+          <td>PUT</td>
+          <td>A JSON object holding data to update. Example<br>
+            {<br>
+            "name":"William"<br>
+            "password" : 2349,<br>
+            "email" : "william@gmail.com"<br>
+            "DOB": "1960"<br>
+            }<br>
+          </td>
+          <td>A JSON object holding the updated user Example:<br>
+            {<br>
+            "id": "1",<br>
+            "name":"Joe"<br>
+            "password" : 4433,<br>
+            "email" : "joesmith@gmail.com"<br>
+            "DOB": "1990"<br>
+            }<br>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">7</th>
+          <td>Add movie to favorites list of user</td>
+          <td>[users]/[name]/[movies]/[MovieID]</td>
+          <td>POST</td>
+          <td>None</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">8</th>
+          <td>Remove a movie from list of favourites</td>
+          <td>/users/[name]/[movies]/[movieID]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A JSON object holding updated user<br>
+            "_id": "1234b3fjs9j83jd9459c643dd",<br>
+            "name": "Minnie",<br>
+            "password": 7865,<br>
+            "email": "minniemouse@hotmail.com",<br>
+            "DOB": "2001",<br>
+            "favoriteMovies": []<br>
+
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">9</th>
+          <td>De-registering a user</td>
+          <td>/users/id</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message indicating
+            user has been successfully removed</td>
+        </tr>
+      </tbody>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
 </body>
+
 </html>
