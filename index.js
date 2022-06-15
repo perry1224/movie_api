@@ -237,7 +237,7 @@ let movies = [
       Title: 'Final Destination',
       Genre: {
         Name: 'horror',
-        Description: 'You canno escape death'},
+        Description: 'You cannot escape death'},
       Year: '2000',
       Director: {
         Name: 'Jeffrey Reddick',
