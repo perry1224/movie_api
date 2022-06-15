@@ -12,13 +12,42 @@ let users = [
   {
     id: 1,
     name: 'Will',
+    password: 'will123',
+    email: 'william@gmail.com',
+    birthdate: '1996-10-20',
     favoriteMovies: []
 },
 {
     id: 2,
     name: 'Miki',
+    password:'miki222',
+    email: 'themiki@hotmail.com',
+    birthdate: '1980-01-01',
     favoriteMovies: ['Your Name']
 },
+{
+    id: 3,
+    name: 'Joe',
+    password: 'joe111',
+    email: 'joesmith123@yahoo.com',
+    birthdate: '2010-02-04',
+    favoriteMovies: []
+},
+{
+    id: 4,
+    name: 'Jane',
+    password: 'janejane',
+    email: 'janejane@outlook.com',
+    birthdate: '2009-11-20',
+    favoriteMovies: ['Inception']
+},
+  {  id: 5,
+     name: 'Naomi',
+     password: 'watanabenaomi',
+     email:'iamnaomi@yahoo.ca',
+     birthdate: '2000-02-02',
+     favoriteMovies: []
+  },
 ]
 
 //CREATE
