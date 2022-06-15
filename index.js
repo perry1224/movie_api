@@ -109,7 +109,8 @@ let movies = [
         Name: 'Hayao Miyazaki',
         DOB: '1941',
         BIO: 'Hayao Miyazaki is a Japanese animator, director, producer, screenwriter, author, and manga artist.'},
-
+      ImagePath: "https://flxt.tmsimg.com/assets/p160146_v_h9_ab.jpg",
+      Featured: false,
     },
     {
       Title: 'Avengers:Endgame',
@@ -121,6 +122,8 @@ let movies = [
         Name: 'Anthony Russo',
         DOB: '1970',
         BIO:'Anthony J. Russo is an American filmmaker and producer who works alongside his brother Joseph Russo'},
+        ImagePath: "https://imageio.forbes.com/blogs-images/markhughes/files/2019/04/AVENGERS-ENDGAME-poster-DOLBY-CINEMA.jpg?format=jpg&width=960",
+        Featured: false,
     },
     {
       Title: 'Your Name',
@@ -132,6 +135,8 @@ let movies = [
         Name:'Makoto Shinkai',
         DOB: '1973',
         BIO:'Shinkai began his career as a video game animator with Nihon Falcom in 1996, and gained recognition as a filmmaker with the release of the original video animation She and Her Cat.'},
+        ImagePath: "https://flxt.tmsimg.com/assets/p13514865_v_v10_aa.jpg",
+        Featured: false,
     },
     {
       Title: 'Scream',
@@ -144,7 +149,8 @@ let movies = [
         DOB: '1939',
         Death: '2015',
         BIO:'Wesley Earl Craven was an American film director, screenwriter, producer, actor, and editor. Due to the cultural impact and influence of his work, Craven has commonly been recognized as one of the greatest masters of the horror genre.'},
-
+      ImagePath: "https://flxt.tmsimg.com/assets/p18852_p_v10_al.jpg",
+      Featured: false,
     },
     {
       Title: 'The Ring',
@@ -156,6 +162,8 @@ let movies = [
         Name: 'Gore Verbinski',
         DOB: '1964',
         BIO: 'Gregor Justin \"Gore\" Verbinski is an American film director, screenwriter, producer, and musician. He is best known for directing The Ring, the Pirates of the Caribbean films, and Rango.'},
+      ImagePath: "https://upload.wikimedia.org/wikipedia/en/3/37/Theringpostere.jpg",
+      Featured: false,
     },
     {
       Title: 'Interstellar',
@@ -167,7 +175,9 @@ let movies = [
         Name: 'Christopher Nolan',
         DOB:'1970',
         BIO:'Christopher Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed more than US$5 billion worldwide, and have garnered 11 Academy Awards from 36 nominations. Born and raised in London, Nolan developed an interest in filmmaking from a young age.'},
-    },
+      ImagePath: "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+      Featured: false,
+      },
     {
       Title: 'Inception',
       Genre: {
@@ -178,7 +188,9 @@ let movies = [
         Name: 'Christopher Nolan',
         DOB: '1970',
         BIO:'Christopher Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed more than US$5 billion worldwide, and have garnered 11 Academy Awards from 36 nominations. Born and raised in London, Nolan developed an interest in filmmaking from a young age.'},
-    },
+      ImagePath: "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+      Featured: false,
+      },
     {
       Title: 'The Dark Knight',
       Genre: {
@@ -189,7 +201,9 @@ let movies = [
         Name:'Christopher Nolan',
         DOB: '1970',
         BIO: 'Christopher Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed more than US$5 billion worldwide, and have garnered 11 Academy Awards from 36 nominations. Born and raised in London, Nolan developed an interest in filmmaking from a young age.'},
-    },
+      ImagePath: "https://upload.wikimedia.org/wikipedia/en/1/1c/The_Dark_Knight_%282008_film%29.jpg",
+      Featured: false,
+      },
     {
       Title: 'Final Destination',
       Genre: {
@@ -200,7 +214,9 @@ let movies = [
         Name: 'Jeffrey Reddick',
         DOB: '1969',
         BIO:'Jeffrey Reddick is an American screenwriter and film director, best known for creating the Final Destination franchise.'},
-    },
+      ImagePath: "https://upload.wikimedia.org/wikipedia/en/a/a3/Final_Destination_movie.jpg",
+      Featured: false,
+      },
     {
       Title: 'Pineapple Express',
       Genre: {
@@ -211,7 +227,9 @@ let movies = [
         Name: 'David Green',
         DOB: '1975',
         BIO: 'Green is an American filmmaker.In 2008, Green transitioned into comedy, directing the films Pineapple Express, Your Highness and The Sitter.'},
-    },
+      ImagePath: "https://upload.wikimedia.org/wikipedia/en/c/ca/Pineapple_Express_Poster.jpg",
+      Featured: false,
+      },
     
   ];
 
