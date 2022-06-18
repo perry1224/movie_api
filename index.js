@@ -96,7 +96,7 @@ app.get("/movies/:Title", (req, res) => {
 });
 
     //Get JSON genre info
-app.get("/genre/:Name", (req, res => {
+app.get("/genre/:Name", (req, res) => {
     Genres.findOne({ Name: req.params.Name})
     .then((genre) => {
         res.json(genre.Description);
@@ -105,7 +105,7 @@ app.get("/genre/:Name", (req, res => {
         console.error(err);
         res.status(500).send("Error: " + err);
     });
-}))
+});
 
     //Get JSON director info
 app.get("/director/:Name", (req, res) => {
