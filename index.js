@@ -34,10 +34,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
   Birthday: Date
 }*/
 app.post('/users', (req, res) => {
-    Users.findOne({ Username: req.body.Name })
+    Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
-          return res.status(400).send(req.body.Name + 'already exists');
+          return res.status(400).send(req.body.Username + ' already exists');
         } else {
           Users
             .create({
@@ -97,10 +97,10 @@ app.get("/movies/:Title", (req, res) => {
 });
 
     //Get JSON genre info
-    app.get('/genre/:Name', (req, res) => {
+    app.get('/movies/genre/:Name', (req, res) => {
       Movies.findOne({ 'Genre.Name': req.params.Name })
         .then((genre) => {
-          res.json(genre.Name);
+          res.json(genre);
         })
         .catch((err) => {
           console.log(err);
