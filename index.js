@@ -144,8 +144,8 @@ app.get('/users/:Name', (req, res) => {
   (required)
   Birthday: Date
 }*/
-app.put('/users/:Username', (req, res) => {
-    Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+app.put('/users/:Name', (req, res) => {
+    Users.findOneAndUpdate({ Name: req.params.Name }, { $set:
       {
         Name: req.body.Name,
         Username: req.body.Username,
@@ -168,8 +168,8 @@ app.put('/users/:Username', (req, res) => {
   
 
   // Add a movie to a user's list of favorites
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
-    Users.findOneAndUpdate({ Username: req.params.Username }, {
+app.post('/users/:Name/movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({ Name: req.params.Name }, {
        $push: { FavoriteMovies: req.params.MovieID }
      },
      { new: true }, // This line makes sure that the updated document is returned
@@ -198,6 +198,25 @@ app.delete('/users/:Name', (req, res) => {
         res.status(500).send('Error: ' + err);
       });
   });
+
+  //DELETE- delete- Delete a movie from user's favorite movies
+app.delete('/users/:Name/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate(
+    { Name: req.params.Name },
+    {
+      $pull: { FavoriteMovies: req.params.MovieID },
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
+});
 
    //Morgan request logger
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
