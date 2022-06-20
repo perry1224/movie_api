@@ -17,6 +17,9 @@ const Directors = Models.Director;
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
   // GET requests
   app.get('/', (req, res) => {
@@ -73,7 +76,7 @@ app.get('/users', (req, res) => {
   });
 
     //Get JSON movies
-app.get("/movies", (req, res) => {
+app.get("/movies", passport.authenticate('jwt', { session: false }),(req, res) => {
     Movies.find()
     .then((movies) => {
         res.status(201).json(movies);
@@ -99,8 +102,8 @@ app.get("/movies/:Title", (req, res) => {
     //Get JSON genre info
     app.get('/movies/genre/:Name', (req, res) => {
       Movies.findOne({ 'Genre.Name': req.params.Name })
-        .then((genre) => {
-          res.json(genre);
+        .then((movie) => {
+          res.json(movie.Genre);
         })
         .catch((err) => {
           console.log(err);
