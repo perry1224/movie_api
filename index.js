@@ -8,11 +8,15 @@ const uuid= require('uuid');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 app.use(bodyParser.json());
+const { check, validationResult } = require('express-validator');
 
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+
+const cors = require('cors');
+app.use(cors());
 
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(bodyParser.json());
@@ -36,7 +40,21 @@ require('./passport');
   Email: String,
   Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users', 
+[
+  check('Username', 'Username is required').isLength({min:5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()],
+  (req, res) => {
+
+    //check the validation object for errors
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ error: errors.array()});
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
@@ -46,7 +64,7 @@ app.post('/users', (req, res) => {
             .create({
               Name: req.body.Name,
               Username: req.body.Username,
-              Password: req.body.Password,
+              Password: hashedPassword,
               Email: req.body.Email,
               Birthday: req.body.Birthday
             })
@@ -147,17 +165,31 @@ app.get('/users/:Name',  passport.authenticate('jwt', { session: false }),(req, 
   (required)
   Birthday: Date
 }*/
-app.put('/users/:Name',  passport.authenticate('jwt', { session: false }),(req, res) => {
+app.put('/users/:Name', [
+check('Username', 'Username is required').isLength({min: 5}),
+check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+check('Password', 'Password is required').not().isEmpty(),
+check('Email', 'Email does not appear to be valid').isEmail()
+], passport.authenticate('jwt', { session: false }),
+(req, res) => {
+// check the validation object for errors
+let errors = validationResult(req);
+
+if (!errors.isEmpty()) {
+  return res.status(422).json({ errors: errors.array() });
+}
+let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Name: req.params.Name }, { $set:
       {
         Name: req.body.Name,
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       }
     },
     { new: true }, // This line makes sure that the updated document is returned
+    
     (err, updatedUser) => {
       if(err) {
         console.error(err);
@@ -236,6 +268,7 @@ app.use((err, req, res, next) => {
 });
 
   // listen for requests
-  app.listen(8085, () => {
-    console.log('Your app is listening on port 8085.');
+  const port = process.env.PORT || 8080;
+  app.listen(port, '0.0.0.0',() => {
+   console.log('Listening on Port ' + port);
   });
