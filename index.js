@@ -144,8 +144,8 @@ app.get('/movies/director/:Name',  passport.authenticate('jwt', { session: false
 });
 
   // Get a user by username
-app.get('/users/:Name',  passport.authenticate('jwt', { session: false }),(req, res) => {
-    Users.findOne({ Name: req.params.Name })
+app.get('/users/:Username',  passport.authenticate('jwt', { session: false }),(req, res) => {
+    Users.findOne({ Username: req.params.Username })
       .then((user) => {
         res.json(user);
       })
@@ -166,7 +166,7 @@ app.get('/users/:Name',  passport.authenticate('jwt', { session: false }),(req, 
   (required)
   Birthday: Date
 }*/
-app.put('/users/:Name', [
+app.put('/users/:Username', [
 check('Username', 'Username is required').isLength({min: 5}),
 check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
 check('Password', 'Password is required').not().isEmpty(),
@@ -180,7 +180,7 @@ if (!errors.isEmpty()) {
   return res.status(422).json({ errors: errors.array() });
 }
 let hashedPassword = Users.hashPassword(req.body.Password);
-    Users.findOneAndUpdate({ Name: req.params.Name }, { $set:
+    Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
       {
         Name: req.body.Name,
         Username: req.body.Username,
@@ -204,8 +204,8 @@ let hashedPassword = Users.hashPassword(req.body.Password);
   
 
   // Add a movie to a user's list of favorites
-app.post('/users/:Name/movies/:MovieID',  passport.authenticate('jwt', { session: false }),(req, res) => {
-    Users.findOneAndUpdate({ Name: req.params.Name }, {
+app.post('/users/:Username/movies/:MovieID',  passport.authenticate('jwt', { session: false }),(req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username }, {
        $push: { FavoriteMovies: req.params.MovieID }
      },
      { new: true }, // This line makes sure that the updated document is returned
@@ -220,8 +220,8 @@ app.post('/users/:Name/movies/:MovieID',  passport.authenticate('jwt', { session
   });
 
   // Delete a user by username
-app.delete('/users/:Name',  passport.authenticate('jwt', { session: false }), (req, res) => {
-    Users.findOneAndRemove({ Name: req.params.Name })
+app.delete('/users/:Username',  passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
         if (!user) {
           res.status(400).send(req.params.Name + ' was not found');
@@ -236,9 +236,9 @@ app.delete('/users/:Name',  passport.authenticate('jwt', { session: false }), (r
   });
 
   //DELETE- delete- Delete a movie from user's favorite movies
-app.delete('/users/:Name/movies/:MovieID',  passport.authenticate('jwt', { session: false }),(req, res) => {
+app.delete('/users/:Username/movies/:MovieID',  passport.authenticate('jwt', { session: false }),(req, res) => {
   Users.findOneAndUpdate(
-    { Name: req.params.Name },
+    { Username: req.params.Username },
     {
       $pull: { FavoriteMovies: req.params.MovieID },
     },
