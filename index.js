@@ -65,7 +65,7 @@ app.post('/users',
         } else {
           Users
             .create({
-              Name: req.body.Name,
+              
               Username: req.body.Username,
               Password: hashedPassword,
               Email: req.body.Email,
@@ -184,7 +184,7 @@ if (!errors.isEmpty()) {
 let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
-      Name: req.body.Name,
+      
       Username: req.body.Username,
       Password: hashedPassword,
       Email: req.body.Email,
