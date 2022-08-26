@@ -1,4 +1,4 @@
-# myFlix-app
+# myFlix-app Backend
 Movie API
 
 ## Description:
