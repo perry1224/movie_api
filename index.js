@@ -19,6 +19,11 @@ const Users = Models.User;
 app.use(bodyParser.json());
 app.use(cors());
 
+/* ******* START OF ENDPOINT DEFINITION ******* 
+************************************************
+************************************************
+*/
+
 /* Connecting to MongoDB movie database */
 //mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -298,6 +303,12 @@ app.delete('/users/:Username/movies/:MovieID',  passport.authenticate('jwt', { s
     }
   );
 });
+
+/* ******* END OF ENDPOINT DEFINITION ******* 
+************************************************
+************************************************
+*/
+
 
    /*Morgan request logger*/
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
